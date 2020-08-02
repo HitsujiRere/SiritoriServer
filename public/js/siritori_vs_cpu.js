@@ -1,7 +1,7 @@
 
 window.onload = () => {
     // 最初の単語
-    const firstWord = "しりとり";
+    const firstWord = 'しりとり';
     addWord(firstWord);
 
     // ツイートボタンの初期化
@@ -10,10 +10,10 @@ window.onload = () => {
 
 // 単語の入力を感知する
 function submitedMyWord() {
-    const myWord = document.getElementById("myWordInputee").value;
+    const myWord = document.getElementById('myWordInputee').value;
 
     // 単語が入力されていないなら終わる
-    if (myWord == "" || !isPlaying) {
+    if (myWord == '' || !isPlaying) {
         return;
     }
 
@@ -24,7 +24,7 @@ function submitedMyWord() {
         // ツイートする文の更新
         updateTweetText();
         // 入力フォームを空にする
-        document.getElementById("myWordInputee").value = "";
+        document.getElementById('myWordInputee').value = '';
 
         if (isPlaying) {
             const enemyWordHead = backWordFoot;
@@ -34,7 +34,7 @@ function submitedMyWord() {
                 let rnd = Math.floor(Math.random() * wordsMap.get(enemyWordHead).size);
                 console.log(rnd);
 
-                let enemyWord = "*****";
+                let enemyWord = '*****';
                 let cnt = 0;
                 for (const [word, wordE] of wordsMap.get(enemyWordHead)) {
                     if (cnt == rnd) {
@@ -45,22 +45,22 @@ function submitedMyWord() {
                 }
                 console.log(enemyWord);
 
-                if (enemyWord == "*****") {
-                    console.log("Error!");
+                if (enemyWord == '*****') {
+                    console.log('Error!');
                 }
 
                 // 単語の追加
                 addWord(enemyWord);
 
-                addMessage(` → CPUは「${enemyWord}」と返した！`);
+                addMessage(`CPUは「${enemyWord}」と返した！`);
 
                 if (!checkContinue(enemyWord)) {
-                    addMessage("勝利！");
+                    addMessage('勝利！');
                     setIsPlaying(false);
                 }
             }
             else {
-                addMessage(" → CPUはなにも返せない！勝利！");
+                addMessage('CPUはなにも返せない！勝利！');
                 setIsPlaying(false);
             }
         }

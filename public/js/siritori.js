@@ -10,17 +10,17 @@ const backWords = new Set();
 let connectTime = 0;
 
 // メッセージテキスト
-let messageText = "";
+let messageText = '';
 
 // プレイ中かどうか
 let isPlaying = true;
 
 // 前の単語の繋がる文字
-let backWordFoot = "";
+let backWordFoot = '';
 
 // 繋がる文字として使えない文字
 const NGBackWordFootChars = [
-    "ゃ", "ゅ", "ょ", "っ", "ー", "ぁ", "ぃ", "ぅ", "ぇ", "ぉ",
+    'ゃ', 'ゅ', 'ょ', 'っ', 'ー', 'ぁ', 'ぃ', 'ぅ', 'ぇ', 'ぉ',
 ];
 
 /*****/
@@ -44,22 +44,22 @@ function checkWord(word) {
         connectTime++;
 
         if (checkContinue(word)) {
-            console.log("OK!");
+            console.log('OK!');
 
-            setMessage("");
+            setMessage('');
         }
         else {
-            console.log("FINISH!");
+            console.log('FINISH!');
 
-            setMessage("負け！");
+            setMessage('「ん」が付いた！負け！');
 
-            isPlaying = false;
+            setIsPlaying(false);
         }
 
         return true;
     }
     else {
-        console.log("NO!");
+        console.log('NO!');
 
         return false;
     }
@@ -68,7 +68,7 @@ function checkWord(word) {
 // 全てひらがなかどうか
 function checkHiragana(word) {
     if (word == null) {
-        setMessage("nullです");
+        setMessage('nullです');
 
         return false;
     }
@@ -76,7 +76,7 @@ function checkHiragana(word) {
     if (word.match(/^[ぁ-んー]*$/)) {
         return true;
     } else {
-        setMessage("ひらがなではありません");
+        setMessage('ひらがなではありません');
 
         return false;
     }
@@ -85,22 +85,22 @@ function checkHiragana(word) {
 // 存在しうる単語かどうか
 function checkViableWord(word) {
     // 2連続であるかどうか
-    //console.log("([ゃゅょぁぃぅぇぉっー])\1+ = " + word.match(/^.*([ゃゅょぁぃぅぇぉっー])\1+.*$/));
+    //console.log('([ゃゅょぁぃぅぇぉっー])\1+ = ' + word.match(/^.*([ゃゅょぁぃぅぇぉっー])\1+.*$/));
     // [ゃゅょぁぃぅぇぉ]が連続して使われているか
-    console.log("[ゃゅょぁぃぅぇぉ]{2,} = " + word.match(/^.*[ゃゅょぁぃぅぇぉ]{2,}.*$/));
+    console.log('[ゃゅょぁぃぅぇぉ]{2,} = ' + word.match(/^.*[ゃゅょぁぃぅぇぉ]{2,}.*$/));
     // [っー]が連続して使われているか
-    console.log("([ーっ])\\1+ = " + word.match(/^.*([っー])\1+.*$/));
+    console.log('([ーっ])\\1+ = ' + word.match(/^.*([っー])\1+.*$/));
     // [っー]→[ゃゅょぁぃぅぇぉ]という順番で使われているか
-    console.log("[っー][ゃゅょぁぃぅぇぉ] = " + word.match(/^.*[っー][ゃゅょぁぃぅぇぉ].*$/));
+    console.log('[っー][ゃゅょぁぃぅぇぉ] = ' + word.match(/^.*[っー][ゃゅょぁぃぅぇぉ].*$/));
     // っ→ーという順番で使われているか
-    console.log("(ー)(っ) = " + word.match(/^.*(ー)(っ).*$/));
+    console.log('(ー)(っ) = ' + word.match(/^.*(ー)(っ).*$/));
 
     if (word.match(/^.*[ゃゅょぁぃぅぇぉ]{2,}.*$/) ||
         word.match(/^.*([ーっ])\1+.*$/) ||
         word.match(/^.*[っー][ゃゅょぁぃぅぇぉ].*$/) ||
         word.match(/^.*(ー)(っ).*$/)
     ) {
-        setMessage("存在しうる単語ではありません");
+        setMessage('存在しうる単語ではありません');
         return false;
     }
     return true;
@@ -109,16 +109,16 @@ function checkViableWord(word) {
 // 前の単語と繋がっているか
 function checkConnect(word) {
 
-    if (backWordFoot == "") {
+    if (backWordFoot == '') {
         return true;
     }
 
-    console.log(backWordFoot + " -> " + word.slice(0, 1));
+    console.log(backWordFoot + ' -> ' + word.slice(0, 1));
 
     if (backWordFoot == word.slice(0, 1)) {
         return true;
     } else {
-        setMessage("前の単語と繋がりません");
+        setMessage('前の単語と繋がりません');
         return false;
     }
 }
@@ -128,7 +128,7 @@ function checkNotUsed(word) {
     if (!backWords.has(word)) {
         return true;
     } else {
-        setMessage("既に使用されています");
+        setMessage('既に使用されています');
         return false;
     }
 }
@@ -146,7 +146,7 @@ function checkExist(word) {
 
 // まだ続くかどうか
 function checkContinue(word) {
-    return word.slice(-1) != "ん";
+    return word.slice(-1) != 'ん';
 }
 
 // 単語を追加する
@@ -155,8 +155,8 @@ function addWord(word) {
 
     addWordToBackWords(word);
 
-    document.getElementById("backWord").innerHTML = word;
-    document.getElementById("backWordFoot").innerHTML = backWordFoot;
+    document.getElementById('backWord').innerHTML = word;
+    document.getElementById('backWordFoot').innerHTML = backWordFoot;
     console.log(backWordFoot);
 
     backWords.add(word);
@@ -166,15 +166,15 @@ function addWord(word) {
 function addWordToBackWords(word) {
     const wordTextNode = document.createTextNode(
         word +
-        (checkExist(word)
-            ? " : " + wordsMap.get(word.slice(0, 1)).get(word).Mean
-            : "")
+        (checkExist(word) && wordsMap.get(word.slice(0, 1)).get(word).Mean != ''
+            ? ' : ' + wordsMap.get(word.slice(0, 1)).get(word).Mean
+            : '')
     );
 
-    const wordLiElement = document.createElement("li");
+    const wordLiElement = document.createElement('li');
     wordLiElement.appendChild(wordTextNode);
 
-    const backWordsElement = document.getElementById("backWords");
+    const backWordsElement = document.getElementById('backWords');
     backWordsElement.insertBefore(wordLiElement, backWordsElement.firstChild);
 
     if (checkExist(word)) {
@@ -197,15 +197,15 @@ function updateBackWordFoot(word) {
 // FIX : URLを任意のものに変更できない
 function setTweetButton(text) {
     //既存のボタンを消去
-    document.getElementById("tweetArea").textContent = null;
+    document.getElementById('tweetArea').textContent = null;
     // 新しいボタンの作成
     twttr.widgets.createShareButton(
-        "",
-        document.getElementById("tweetArea"),
+        '',
+        document.getElementById('tweetArea'),
         {
-            size: "large",
+            size: 'large',
             text: text,
-            //hashtags: "１人しりとり",
+            //hashtags: '１人しりとり',
             //url: url,
         }
     );
@@ -223,10 +223,14 @@ function addMessage(txt) {
 
 // メッセージの更新
 function updateMessage() {
-    const messageEl = document.getElementById("message");
+    const messageEl = document.getElementById('message');
     messageEl.innerHTML = messageText;
 }
 
 function setIsPlaying(t) {
     isPlaying = t;
+
+    if (!isPlaying) {
+        document.getElementById('inputeeDiv').style.display = 'none';
+    }
 }

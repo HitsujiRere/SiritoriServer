@@ -11,59 +11,88 @@
     <script>
         convertWordsMap('<%- JSON.stringify(words) %>');
     </script>
+
+    <link rel="stylesheet" href="/css/siritori_vs_cpu.css">
 </head>
 
 <body>
-    <h1>しりとり VS. CPU</h1>
+    <div class="main">
+        <h1>しりとり VS. CPU</h1>
 
-    <p>ルール</p>
-    <ul>
-        <li>ひらがなのみ使用可能</li>
-        <li>最後の文字が「ん」だと終了</li>
-        <li>最後の文字が「ゃ」「ゅ」「ょ」「っ」「ー」「ぁ」「ぃ」「ぅ」「ぇ」「ぉ」だとその前の文字から繋げる</li>
-        <li>「ん」が付く，もしくは返せなくなったほうの負け</li>
-    </ul>
+        <div>
+            <ul class="list-1">
+                <li class="list-1-li">
+                    <h2>ルール</h2>
+                    <ul class="list-disc">
+                        <li>ひらがなのみ使用可能</li>
+                        <li>最後の文字が「ん」だと終了</li>
+                        <li>最後の文字が「ゃ」「ゅ」「ょ」「っ」「ー」「ぁ」「ぃ」「ぅ」「ぇ」「ぉ」だとその前の文字から繋げる</li>
+                        <li>「ん」が付く，もしくは返せなくなったほうの負け</li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
 
-    <p>
-        <span id="backWord">any word</span>
-        「<span id="backWordFoot">any char</span>」
-        →
-    </p>
 
-    <form id="form" onsubmit="submitedMyWord(); return false;">
-        <input type="text" id="myWordInputee" size="20">
-        <input type="submit" value="決定">
-    </form>
+        <div class="center">
+            <p id="message"></p>
 
-    <p id="message"></p>
+            <div id="inputeeDiv">
+                <p>
+                    <span id="backWord">any word</span>
+                    「<span id="backWordFoot">any char</span>」
+                </p>
 
-    <h2>過去</h2>
-    <ul id="backWords">
-    </ul>
+                <p>↓</p>
 
-    <div id="tweetArea"> </div>
-    <script src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+                <form id="form" onsubmit="submitedMyWord(); return false;">
+                    <input type="text" id="myWordInputee" size="20">
+                    <input type="submit" value="決定">
+                </form>
+            </div>
+        </div>
 
-    <details>
-        <summary>単語（頭順） : <%= words.length %>語</summary>
-        <ul id="wordsMap">
-            <% wordsMap.forEach((arr, key, map) => { %>
-            <details>
-                <summary><%= key %> : <%= arr.length %>語</summary>
-                <ul>
-                    <% arr.forEach((value) => { %>
-                    <li>
-                        <%= value.Read %>
-                        <% if (value.Mean != '') { %>
-                        : <%= value.Mean %>
-                        <% } %>
-                    </li>
-                    <% }) %>
-                </ul>
-            </details>
-            <% }); %>
-        </ul>
-    </details>
+        <div>
+            <ul class="list-1-full">
+                <li class="list-1-full-li">
+                    <h2>過去</h2>
+                    <ul id="backWords" class="list-disc">
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+        <div id="tweetArea"> </div>
+        <script src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+        <details>
+            <summary>単語（頭順） : <%= words.length %>語</summary>
+            <ul id="wordsMap">
+                <% wordsMap.forEach((arr, key, map) => { %>
+                <details>
+                    <summary><%= key %> : <%= arr.length %>語</summary>
+                    <ul>
+                        <% arr.forEach((value) => { %>
+                        <li>
+                            <%= value.Read %>
+                            <% if (value.Mean != '') { %>
+                            : <%= value.Mean %>
+                            <% } %>
+                        </li>
+                        <% }) %>
+                    </ul>
+                </details>
+                <% }); %>
+            </ul>
+        </details>
+    </div>
+
+    <div class="footer">
+        <p>
+            maked by
+            <a href="https://hitsujirere.github.io" target=”_blank”>HitsujiRere</a>
+        </p>
+    </div>
 </body>
 
 </html>
