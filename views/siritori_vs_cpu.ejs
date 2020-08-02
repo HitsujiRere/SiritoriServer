@@ -1,13 +1,3 @@
-<%
-    const wordsMap = new Map();
-    words.forEach(function (word, key) {
-        if (!wordsMap.has(word.Read.slice(0, 1))) {
-            wordsMap.set(word.Read.slice(0, 1), []);
-        }
-        wordsMap.get(word.Read.slice(0, 1)).push(word);
-    });
-%>
-
 <!DOCTYPE html>
 
 <html>

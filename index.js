@@ -17,10 +17,13 @@ app.get('/siritori_vs_cpu', (req, res) => {
     res.render('siritori_vs_cpu.ejs',
         {
             words: siritori.wordsJson,
+            wordsMap: siritori.wordsMap,
         }
     );
 });
 
 app.listen(PORT, (req, res) => {
     console.log('Server is up!');
+
+    siritori.makeWordsMap();
 });
