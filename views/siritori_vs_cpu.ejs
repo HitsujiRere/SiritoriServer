@@ -1,0 +1,79 @@
+<%
+    const wordsMap = new Map();
+    words.forEach(function (word, key) {
+        if (!wordsMap.has(word.Read.slice(0, 1))) {
+            wordsMap.set(word.Read.slice(0, 1), []);
+        }
+        wordsMap.get(word.Read.slice(0, 1)).push(word);
+    });
+%>
+
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>しりとり</title>
+
+    <script type="text/javascript" src="/js/siritori.js"></script>
+    <script type="text/javascript" src="/js/siritori_vs_cpu.js"></script>
+    <script>
+        convertWordsMap('<%- JSON.stringify(words) %>');
+    </script>
+</head>
+
+<body>
+    <h1>しりとり VS. CPU</h1>
+
+    <p>ルール</p>
+    <ul>
+        <li>ひらがなのみ使用可能</li>
+        <li>最後の文字が「ん」だと終了</li>
+        <li>最後の文字が「ゃ」「ゅ」「ょ」「っ」「ー」「ぁ」「ぃ」「ぅ」「ぇ」「ぉ」だとその前の文字から繋げる</li>
+        <li>「ん」が付く，もしくは返せなくなったほうの負け</li>
+    </ul>
+
+    <p>
+        <span id="backWord">any word</span>
+        「<span id="backWordFoot">any char</span>」
+        →
+    </p>
+
+    <form id="form" onsubmit="submitedMyWord(); return false;">
+        <input type="text" id="myWordInputee" size="20">
+        <input type="submit" value="決定">
+    </form>
+
+    <p id="message"></p>
+
+    <h2>過去</h2>
+    <ul id="backWords">
+    </ul>
+
+    <div id="tweetArea"> </div>
+    <script src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+    <details>
+        <summary>単語（頭順） : <%= words.length %>語</summary>
+        <ul id="wordsMap">
+            <% wordsMap.forEach((arr, key, map) => { %>
+            <details>
+                <summary><%= key %> : <%= arr.length %>語</summary>
+                <ul>
+                    <% arr.forEach((value) => { %>
+                    <li>
+                        <%= value.Read %>
+                        <% if (value.Mean != '') { %>
+                        : <%= value.Mean %>
+                        <% } %>
+                    </li>
+                    <% }) %>
+                </ul>
+            </details>
+            <% }); %>
+        </ul>
+    </details>
+</body>
+
+</html>
