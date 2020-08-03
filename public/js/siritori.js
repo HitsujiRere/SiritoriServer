@@ -67,7 +67,7 @@ function checkWord(word) {
 
 // 全てひらがなかどうか
 function checkHiragana(word) {
-    if (word == null) {
+    if (word === null) {
         setMessage('nullです');
 
         return false;
@@ -109,7 +109,7 @@ function checkViableWord(word) {
 // 前の単語と繋がっているか
 function checkConnect(word) {
 
-    if (backWordFoot == '') {
+    if (backWordFoot === '') {
         return true;
     }
 
@@ -166,7 +166,7 @@ function addWord(word) {
 function addWordToBackWords(word) {
     const wordTextNode = document.createTextNode(
         word +
-        (checkExist(word) && wordsMap.get(word.slice(0, 1)).get(word).Mean != ''
+        (checkExist(word) && wordsMap.get(word.slice(0, 1)).get(word).Mean !== ''
             ? ' : ' + wordsMap.get(word.slice(0, 1)).get(word).Mean
             : '')
     );
