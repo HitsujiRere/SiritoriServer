@@ -33,7 +33,6 @@
             </ul>
         </div>
 
-
         <div class="center">
             <p id="message"></p>
 
@@ -68,11 +67,11 @@
         <details>
             <summary>単語（頭順） : <%= words.length %>語</summary>
             <ul id="wordsMap">
-                <% wordsMap.forEach((arr, key, map) => { %>
+                <% wordsMap.forEach((headMap, head, _wordsMap) => { %>
                 <details>
-                    <summary><%= key %> : <%= arr.length %>語</summary>
+                    <summary><%= head %> : <%= headMap.size %>語</summary>
                     <ul>
-                        <% arr.forEach((value) => { %>
+                        <% headMap.forEach((value, read, _headMap) => { %>
                         <li>
                             <%= value.Read %>
                             <% if (value.Mean != '') { %>

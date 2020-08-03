@@ -1,18 +1,59 @@
 'use strict';
 
-const wordsJson = require('./public/data/words.json');
-exports.wordsJson = wordsJson;
+const standardWordsJson = require('./public/data/standard_words.json');
+exports.standardWordsJson = standardWordsJson;
 
-const wordsMap = new Map();
-exports.wordsMap = wordsMap;
+const userWordsJson = require('./public/data/user_words.json');
+exports.userWordsJson = userWordsJson;
 
-const makeWordsMap = () => {
-    wordsJson.forEach(function (word, key) {
-        if (!wordsMap.has(word.Read.slice(0, 1))) {
-            wordsMap.set(word.Read.slice(0, 1), []);
+const standardWordsMap = new Map();
+exports.standardWordsMap = standardWordsMap;
+
+const userWordsMap = new Map();
+exports.userWordsMap = userWordsMap;
+
+const makeStandardWordsMap = async () => {
+    await standardWordsJson.forEach(async (word, key) => {
+        const wordHead = word.Read.slice(0, 1);
+        if (!standardWordsMap.has(wordHead)) {
+            standardWordsMap.set(wordHead, new Map());
         }
-        wordsMap.get(word.Read.slice(0, 1)).push(word);
+        standardWordsMap.get(wordHead).set(word.Read, word);
     });
-    console.log('wordsMap maked!');
+    console.log('standardWordsMap maked!');
+};
+
+const makeUserWordsMap = async () => {
+    await userWordsJson.forEach(async (word, key) => {
+        const wordHead = word.Read.slice(0, 1);
+        if (!userWordsMap.has(wordHead)) {
+            userWordsMap.set(wordHead, new Map());
+        }
+        userWordsMap.get(wordHead).set(word.Read, word);
+    });
+    console.log('userWordsMap maked!');
+};
+
+const makeWordsMap = async () => {
+    makeStandardWordsMap();
+    makeUserWordsMap();
 };
 exports.makeWordsMap = makeWordsMap;
+
+const existsWordInStandardWordsMap = (word) => {
+    const wordHead = word.slice(0, 1);
+
+    return standardWordsMap.has(wordHead) &&
+        standardWordsMap.get(wordHead).has(word);
+}
+exports.existsWordInStandardWordsMap = existsWordInStandardWordsMap;
+
+const pushWordToUserWordsMap = (word) => {
+    const wordHead = word.slice(0, 1);
+
+    if (!userWordsMap.has(wordHead)) {
+        userWordsMap.set(wordHead, new Map());
+    }
+    userWordsMap.get(wordHead).set(word, { Read: word, Mean: '' });
+}
+exports.pushWordToUserWordsMap = pushWordToUserWordsMap;

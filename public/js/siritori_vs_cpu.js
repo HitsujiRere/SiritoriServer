@@ -1,4 +1,8 @@
 
+const xhr = new XMLHttpRequest();
+
+/*****/
+
 window.onload = () => {
     // 最初の単語
     const firstWord = 'しりとり';
@@ -19,6 +23,12 @@ function submitedMyWord() {
 
     // 入力した単語が正しいか調べる
     if (checkWord(myWord)) {
+
+        // 入力した単語を送信する
+        xhr.open('POST', '/siritori/used_word', true);
+        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        xhr.send(EncodeHTMLForm({ word: myWord }));
+
         // 単語の追加
         addWord(myWord);
         // ツイートする文の更新
@@ -72,4 +82,17 @@ function updateTweetText() {
     setTweetButton(
         `CPU対戦しりとりで${connectTime}回続きました！`
     );
+}
+
+function EncodeHTMLForm(data) {
+    var params = [];
+
+    for (var name in data) {
+        var value = data[name];
+        var param = encodeURIComponent(name) + '=' + encodeURIComponent(value);
+
+        params.push(param);
+    }
+
+    return params.join('&').replace(/%20/g, '+');
 }
