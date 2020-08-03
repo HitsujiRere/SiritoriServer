@@ -1,5 +1,7 @@
 'use strict';
 
+const fs = require('fs');
+
 const standardWordsJson = require('./public/data/standard_words.json');
 exports.standardWordsJson = standardWordsJson;
 
@@ -48,12 +50,27 @@ const existsWordInStandardWordsMap = (word) => {
 }
 exports.existsWordInStandardWordsMap = existsWordInStandardWordsMap;
 
-const pushWordToUserWordsMap = (word) => {
+const existsWordInUserWordsMap = (word) => {
+    const wordHead = word.slice(0, 1);
+
+    return userWordsMap.has(wordHead) &&
+        userWordsMap.get(wordHead).has(word);
+}
+exports.existsWordInUserWordsMap = existsWordInUserWordsMap;
+
+const pushWordToUserWordsMap = async (word) => {
     const wordHead = word.slice(0, 1);
 
     if (!userWordsMap.has(wordHead)) {
         userWordsMap.set(wordHead, new Map());
     }
     userWordsMap.get(wordHead).set(word, { Read: word, Mean: '' });
+
+    await userWordsJson.push({ Read: word, Mean: '' });
+
+    fs.writeFileSync(
+        './public/data/user_words.json',
+        JSON.stringify(userWordsJson, null, '  ')
+    );
 }
 exports.pushWordToUserWordsMap = pushWordToUserWordsMap;
