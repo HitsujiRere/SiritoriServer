@@ -1,0 +1,120 @@
+html {
+    font-family: 'Lato', 'Noto Sans JP', 'ヒラギノ角ゴ ProN', 'Hiragino Kaku Gothic ProN', 'メイリオ', Meiryo, 'ＭＳ Ｐゴシック', 'MS PGothic', sans-serif;
+    font-size: 20px;
+    font-weight: normal;
+}
+
+input {
+    font-family: 'Lato', 'Noto Sans JP', 'ヒラギノ角ゴ ProN', 'Hiragino Kaku Gothic ProN', 'メイリオ', Meiryo, 'ＭＳ Ｐゴシック', 'MS PGothic', sans-serif;
+    font-size: 20px;
+    font-weight: normal;
+}
+
+body {
+    background-color: #EFEFEF;
+
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.main h1 {
+    color: #6594e0;
+    padding: 0.5em 0;
+    border-top: solid 3px #6594e0;
+    border-bottom: solid 3px #6594e0;
+    text-align: center;
+}
+
+.main h2 {
+    color: #6594e0;
+}
+
+
+.no-link {
+    color: #FF0000;
+    text-decoration: line-through;
+}
+
+a:not(.no-link){
+    color: #005DFF;
+    text-align: center;
+    position: relative;
+    text-decoration: none;
+    display: inline-block;
+}
+
+a:not(.no-link)::before {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0px;
+    width: 100%;
+    height: 2px;
+    background: #005DFF;
+    display: block;
+    -webkit-transform-origin: right top;
+    -ms-transform-origin: right top;
+    transform-origin: right top;
+    -webkit-transform: scale(0, 1);
+    -ms-transform: scale(0, 1);
+    transform: scale(0, 1);
+    -webkit-transition: transform 0.4s cubic-bezier(1, 0, 0, 1);
+    transition: transform 0.4s cubic-bezier(1, 0, 0, 1)
+}
+a:not(.no-link):hover::before {
+    -webkit-transform-origin: left top;
+    -ms-transform-origin: left top;
+    transform-origin: left top;
+    -webkit-transform: scale(1, 1);
+    -ms-transform: scale(1, 1);
+    transform: scale(1, 1)
+}
+
+.list-1 {
+    text-align: center;
+    padding-left: 0px;
+}
+
+.list-1-li {
+    display: inline-block;
+    padding: 0.5em 1em;
+    text-decoration: none;
+    border: double 4px #D20250;
+    border-radius: 10px;
+    background: #f2fcff;
+    text-align: start;
+    margin: 8px 5px;
+}
+
+.list-1-full {
+    text-align: center;
+    padding-left: 0px;
+}
+
+.list-1-full-li {
+    display: inline-block;
+    padding: 0.5em 1em;
+    text-decoration: none;
+    border: double 4px #D20250;
+    border-radius: 20px;
+    background: #f2fcff;
+    text-align: start;
+    margin: 8px 5px;
+    width: 90%;
+}
+
+.list-disc li {
+    list-style-type: disc;
+}
+
+.center {
+    text-align: center;
+}
+
+.right {
+    text-align: right;
+}
+
+.emphasis {
+    font-size: larger;
+}
