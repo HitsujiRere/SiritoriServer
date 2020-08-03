@@ -58,6 +58,4 @@ app.use(async (err, req, res, next) => {
 
 app.listen(PORT, async (req, res) => {
     console.log('Server is up!');
-
-    siritori.makeWordsMap();
 });

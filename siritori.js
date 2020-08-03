@@ -1,12 +1,14 @@
 'use strict';
 
-const fs = require('fs');
+const { getPostgresClient } = require('./postgres');
+
+require('dotenv').config();
 
 const standardWordsJson = require('./public/data/standard_words.json');
 exports.standardWordsJson = standardWordsJson;
 
-const userWordsJson = require('./public/data/user_words.json');
-exports.userWordsJson = userWordsJson;
+let userWordsJson = [];
+//exports.userWordsJson = userWordsJson;
 
 const standardWordsMap = new Map();
 exports.standardWordsMap = standardWordsMap;
@@ -25,6 +27,34 @@ const makeStandardWordsMap = async () => {
     console.log('standardWordsMap maked!');
 };
 
+const loadUserWordsJSON = async () => {
+    const db = await getPostgresClient();
+
+    try {
+        const sql = `SELECT json_agg(user_words) FROM user_words;`;
+
+        await db.begin();
+        const ret = await db.execute(sql);
+        const retText = JSON.stringify(ret[0].json_agg)
+            .replace(/read/g, 'Read')
+            .replace(/mean/g, 'Mean')
+            .replace(/null/g, '""');
+        const userWords = JSON.parse(retText);
+        userWordsJson = userWords;
+        exports.userWordsJson = userWordsJson;
+
+        await db.commit();
+
+    } catch (e) {
+        await db.rollback();
+        throw e;
+    } finally {
+        await db.release();
+    }
+
+    console.log('userWordsJSON loaded!');
+};
+
 const makeUserWordsMap = async () => {
     await userWordsJson.forEach(async (word, key) => {
         const wordHead = word.Read.slice(0, 1);
@@ -38,9 +68,10 @@ const makeUserWordsMap = async () => {
 
 const makeWordsMap = async () => {
     makeStandardWordsMap();
+    await loadUserWordsJSON();
     makeUserWordsMap();
 };
-exports.makeWordsMap = makeWordsMap;
+makeWordsMap();
 
 const existsWordInStandardWordsMap = (word) => {
     const wordHead = word.slice(0, 1);
@@ -68,9 +99,21 @@ const pushWordToUserWordsMap = async (word) => {
 
     await userWordsJson.push({ Read: word, Mean: '' });
 
-    fs.writeFileSync(
-        './public/data/user_words.json',
-        JSON.stringify(userWordsJson, null, '  ')
-    );
+    const db = await getPostgresClient();
+
+    try {
+        const sql = `INSERT INTO user_words (read) VALUES ($1);`;
+        const params = [word];
+
+        await db.begin();
+        await db.execute(sql, params);
+        await db.commit();
+
+    } catch (e) {
+        await db.rollback();
+        throw e;
+    } finally {
+        await db.release();
+    }
 }
 exports.pushWordToUserWordsMap = pushWordToUserWordsMap;
