@@ -15,6 +15,10 @@ app.use(bodyParser.json());
 app.use(express.static('public'));
 
 app.get('/', async (req, res) => {
+    res.render('index.ejs');
+});
+
+app.get('/hello', async (req, res) => {
     res.render('hello.ejs');
 });
 
