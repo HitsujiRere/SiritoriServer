@@ -48,10 +48,12 @@ function submitedMyWord() {
     // 入力した単語が正しいか調べる
     if (checkWord(myWord)) {
 
-        // 入力した単語を送信する
-        xhr.open('POST', '/siritori/used_word', true);
-        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-        xhr.send(EncodeHTMLForm({ word: myWord }));
+        if (isSendWord) {
+            // 入力した単語を送信する
+            xhr.open('POST', '/siritori/used_word', true);
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            xhr.send(EncodeHTMLForm({ word: myWord }));
+        }
 
         // 単語の追加
         addWord(myWord);
