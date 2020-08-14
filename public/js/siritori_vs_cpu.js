@@ -1,9 +1,33 @@
 
 const xhr = new XMLHttpRequest();
 
+let isSendWord = true;
+
 /*****/
 
 window.onload = () => {
+    const confirmationText = document.getElementById('confirmationText');
+    const confirmationOK = document.getElementById('confirmationOK');
+    const confirmationNG = document.getElementById('confirmationNG');
+    const myWordInputee = document.getElementById('myWordInputee');
+    const myWordSubmitButton = document.getElementById('myWordSubmitButton');
+    confirmationOK.addEventListener('click', (ev) => {
+        confirmationText.innerHTML = "ありがとうございます。";
+        confirmationOK.style.setProperty('display', 'none');
+        confirmationNG.style.setProperty('display', 'none');
+        myWordInputee.disabled = false;
+        myWordSubmitButton.disabled = false;
+        isSendWord = true;
+    });
+    confirmationNG.addEventListener('click', (ev) => {
+        confirmationText.innerHTML = "ユーザが使用した単語を送信しません。";
+        confirmationOK.style.setProperty('display', 'none');
+        confirmationNG.style.setProperty('display', 'none');
+        myWordInputee.disabled = false;
+        myWordSubmitButton.disabled = false;
+        isSendWord = false;
+    });
+
     // 最初の単語
     const firstWord = 'しりとり';
     addWord(firstWord);

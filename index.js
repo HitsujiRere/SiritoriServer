@@ -43,7 +43,8 @@ app.post('/siritori/used_word', async (req, res) => {
     res.status(200);
     res.end();
 
-    if (!siritori.existsWordInStandardWordsMap(read) && !siritori.existsWordInUserWordsMap(read)) {
+    if (!siritori.existsWordInStandardWordsMap(read) &&
+        !siritori.existsWordInUserWordsMap(read)) {
         siritori.pushWordToUserWordsMap(read);
         console.log(`add '${read}' to user words!`);
     }

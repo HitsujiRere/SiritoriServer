@@ -39,6 +39,18 @@
             </ul>
         </div>
 
+        <div>
+            <ul class="list-1-full">
+                <li class="list-1-full-li center">
+                    <p id="confirmationText">このサイトではユーザが使用した単語をver.βのためにサーバに送信しています。</p>
+                    <p>
+                        <input type="button" value="許可しない" id="confirmationNG">
+                        <input type="button" value="了解しました" id="confirmationOK">
+                    </p>
+                </li>
+            </ul>
+        </div>
+
         <div class="center">
             <p id="message"></p>
 
@@ -51,8 +63,8 @@
                 <p>↓</p>
 
                 <form id="form" onsubmit="submitedMyWord(); return false;">
-                    <input type="text" id="myWordInputee" size="20">
-                    <input type="submit" value="決定">
+                    <input type="text" id="myWordInputee" size="20" disabled>
+                    <input type="submit" value="決定" id="myWordSubmitButton" disabled>
                 </form>
             </div>
         </div>
