@@ -50,6 +50,10 @@ app.post('/siritori/used_word', async (req, res) => {
     }
 });
 
+app.get('/.well-known/acme-challenge/rY0fvYmJLUIHodrWrOvXcaANwgPzxTh-22EI7ORvLRE', async (req, res) => {
+    res.send('rY0fvYmJLUIHodrWrOvXcaANwgPzxTh-22EI7ORvLRE.49sQZUpRFRuJzT4FvKST0pOQsyelKxBI4CEsH3786eM');
+});
+
 app.use(async (req, res, next) => {
     res.status(404);
     res.render('err404.ejs');
