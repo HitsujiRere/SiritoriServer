@@ -5,7 +5,7 @@ const bodyParser = require('body-parser');
 
 const siritori = require('./siritori');
 
-const PORT = process.env.PORT || 8000;
+const PORT = process.env.PORT || 8001;
 
 const app = express();
 app.use(bodyParser.urlencoded({
@@ -20,6 +20,10 @@ app.get('/', async (req, res) => {
 
 app.get('/hello', async (req, res) => {
     res.render('hello.ejs');
+});
+
+app.get('/siritori/alone', async (req, res) => {
+    res.render('siritori_alone.ejs');
 });
 
 app.get('/siritori/vs_cpu', async (req, res) => {
