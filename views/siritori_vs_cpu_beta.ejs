@@ -9,7 +9,7 @@
     <script type="text/javascript" src="/js/siritori.js"></script>
     <script type="text/javascript" src="/js/siritori_vs_cpu.js"></script>
     <script>
-        isHardMode = '<%- isHardMode %>';
+        isHardMode = <%= isHardMode %>;
         convertWordsMap('<%- JSON.stringify(standardWords) %>');
         convertWordsMap('<%- JSON.stringify(userWords) %>');
     </script>
@@ -25,7 +25,7 @@
     </div>
 
     <div class="main">
-        <h1>しりとり VS. CPU ( ver.β )</h1>
+        <h1 id="title">しりとり VS. CPU ( ver.β )</h1>
 
         <p class="emphasis center">
             ※βバージョンでは，他のユーザが使用した単語をCPUが用います．

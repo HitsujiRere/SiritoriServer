@@ -28,6 +28,10 @@ window.onload = () => {
         isSendWord = false;
     });
 
+    if (isHardMode) {
+        document.getElementById('title').innerHTML += ' - ハードモード';
+    }
+
     // 最初の単語
     const firstWord = 'しりとり';
     addWord(firstWord);
