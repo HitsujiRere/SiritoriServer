@@ -28,6 +28,15 @@ app.get('/siritori/alone', async (req, res) => {
 
 app.get('/siritori/vs_cpu', async (req, res) => {
     res.render('siritori_vs_cpu.ejs', {
+        isHardMode: false,
+        standardWords: siritori.standardWordsJson,
+        standardWordsMap: siritori.standardWordsMap,
+    });
+});
+
+app.get('/siritori/vs_cpu_hard', async (req, res) => {
+    res.render('siritori_vs_cpu.ejs', {
+        isHardMode: true,
         standardWords: siritori.standardWordsJson,
         standardWordsMap: siritori.standardWordsMap,
     });
@@ -35,6 +44,17 @@ app.get('/siritori/vs_cpu', async (req, res) => {
 
 app.get('/siritori/vs_cpu_beta', async (req, res) => {
     res.render('siritori_vs_cpu_beta.ejs', {
+        isHardMode: false,
+        standardWords: siritori.standardWordsJson,
+        standardWordsMap: siritori.standardWordsMap,
+        userWords: siritori.userWordsJson,
+        userWordsMap: siritori.userWordsMap,
+    });
+});
+
+app.get('/siritori/vs_cpu_beta_hard', async (req, res) => {
+    res.render('siritori_vs_cpu_beta.ejs', {
+        isHardMode: true,
         standardWords: siritori.standardWordsJson,
         standardWordsMap: siritori.standardWordsMap,
         userWords: siritori.userWordsJson,
@@ -47,7 +67,8 @@ app.post('/siritori/used_word', async (req, res) => {
     res.status(200);
     res.end();
 
-    if (!siritori.existsWordInStandardWordsMap(read) &&
+    if (read.length > 1 &&
+        !siritori.existsWordInStandardWordsMap(read) &&
         !siritori.existsWordInUserWordsMap(read)) {
         siritori.pushWordToUserWordsMap(read);
         console.log(`add '${read}' to user words!`);

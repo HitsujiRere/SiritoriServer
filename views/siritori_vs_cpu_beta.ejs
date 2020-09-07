@@ -9,6 +9,7 @@
     <script type="text/javascript" src="/js/siritori.js"></script>
     <script type="text/javascript" src="/js/siritori_vs_cpu.js"></script>
     <script>
+        isHardMode = '<%- isHardMode %>';
         convertWordsMap('<%- JSON.stringify(standardWords) %>');
         convertWordsMap('<%- JSON.stringify(userWords) %>');
     </script>

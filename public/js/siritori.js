@@ -30,10 +30,12 @@ const NGBackWordFootChars = [
 function convertWordsMap(wordsJson) {
     const words = JSON.parse(wordsJson);
     words.forEach(function (word, key) {
-        if (!wordsMap.has(word.Read.slice(0, 1))) {
-            wordsMap.set(word.Read.slice(0, 1), new Map());
+        if (!isHardMode || word.Read.slice(-1) != 'ん') {
+            if (!wordsMap.has(word.Read.slice(0, 1))) {
+                wordsMap.set(word.Read.slice(0, 1), new Map());
+            }
+            wordsMap.get(word.Read.slice(0, 1)).set(word.Read, word);
         }
-        wordsMap.get(word.Read.slice(0, 1)).set(word.Read, word);
     });
 }
 
