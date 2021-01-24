@@ -62,16 +62,26 @@ app.get('/siritori/vs_cpu_beta_hard', async (req, res) => {
     });
 });
 
+app.get('/siritori/show_words', async (req, res) => {
+    res.render('show_words.ejs', {
+        standardWords: siritori.standardWordsJson,
+        standardWordsMap: siritori.standardWordsMap,
+        userWords: siritori.userWordsJson,
+        userWordsMap: siritori.userWordsMap,
+    });
+});
+
 app.post('/siritori/used_word', async (req, res) => {
     const read = req.body.word;
+    const mean = req.body.mean || '';
     res.status(200);
     res.end();
 
     if (read.length > 1 &&
         !siritori.existsWordInStandardWordsMap(read) &&
         !siritori.existsWordInUserWordsMap(read)) {
-        siritori.pushWordToUserWordsMap(read);
-        console.log(`add '${read}' to user words!`);
+        siritori.pushWordToUserWordsMap(read, mean);
+        console.log(`add '${read}' (${mean}) to user words!`);
     }
 });
 

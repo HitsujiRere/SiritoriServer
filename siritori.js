@@ -89,21 +89,21 @@ const existsWordInUserWordsMap = (word) => {
 }
 exports.existsWordInUserWordsMap = existsWordInUserWordsMap;
 
-const pushWordToUserWordsMap = async (word) => {
+const pushWordToUserWordsMap = async (word, mean) => {
     const wordHead = word.slice(0, 1);
 
     if (!userWordsMap.has(wordHead)) {
         userWordsMap.set(wordHead, new Map());
     }
-    userWordsMap.get(wordHead).set(word, { Read: word, Mean: '' });
+    userWordsMap.get(wordHead).set(word, { Read: word, Mean: mean });
 
     await userWordsJson.push({ Read: word, Mean: '' });
 
     const db = await getPostgresClient();
 
     try {
-        const sql = `INSERT INTO user_words (read) VALUES ($1);`;
-        const params = [word];
+        const sql = `INSERT INTO user_words (read, mean) VALUES ($1, $2);`;
+        const params = [word, mean];
 
         await db.begin();
         await db.execute(sql, params);
